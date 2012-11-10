@@ -10,6 +10,7 @@ pygame.init()
 pygame.display.set_caption("Monochrome")
 pygame.mouse.set_visible(False)
 flags = 0
+#flags |= pygame.DOUBLEBUF | pygame.HWSURFACE
 if fullscreen:
     flags |= pygame.FULLSCREEN
 screen = pygame.display.set_mode((screen_w, screen_h), flags)
@@ -40,7 +41,7 @@ while True:
                 quit()
         #pos = pygame.mouse.get_pos()
     #screen.fill((0,0,0))
-    N=32
+    N=64
     if i % N == 0:
         print("%.3f FPS" % (N/(time.time()-t0)))
         t0 = time.time()
@@ -50,6 +51,6 @@ while True:
     world.radius = int(math.exp(6.5 - math.cos(time.time()/50*2*math.pi) * 0.5))
     world.render(arr)
     #pygame.draw.rect(screen, (255,255,255), [10,20,30,40])
-    clock.tick(60)
+    clock.tick(90)
     #print('%.6f' % (time.time() % 1))
     pygame.display.flip()
