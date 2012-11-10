@@ -15,6 +15,8 @@ class World {
     uint8_t * p = (uint8_t*)buf.buf;
     
     int radius2 = radius*radius;
+    uint32_t one_over_radius2 = (1L<<32)/(radius*radius);
+    printf("one_over_radius2 %d\n", (int)one_over_radius2);
     int cx = 400;
     int cy = 300;
 
@@ -22,9 +24,10 @@ class World {
       for (int x=0; x<width; x++) {
         int dist2 = (x-cx)*(x-cx) + (y-cy)*(y-cy);
         if (dist2 < radius2) {
-          p[0] = p[0] * dist2 / radius2;
-          p[1] = p[1] * dist2 / radius2;
-          p[2] = p[2] * dist2 / radius2;
+          double fac = dist2 * one_over_radius2;
+          p[0] = p[0] * fac;
+          p[1] = p[1] * fac;
+          p[2] = p[2] * fac;
         }
         p += 4;
       }

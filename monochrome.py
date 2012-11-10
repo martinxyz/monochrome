@@ -28,6 +28,7 @@ def quit():
 world = monofast.World()
 
 i = 0
+t0 = time.time()
 while True:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
@@ -39,10 +40,14 @@ while True:
                 quit()
         #pos = pygame.mouse.get_pos()
     #screen.fill((0,0,0))
+    N=32
+    if i % N == 0:
+        print("%.3f FPS" % (N/(time.time()-t0)))
+        t0 = time.time()
     i += 1
     arr[:,:] = numpy.random.randint(256**3, size=(screen_w, screen_h))
     #world.radius = int(math.exp(-7 + (math.sin(i/2000*2*math.pi)+1) * 8.0))
-    world.radius = int(math.exp(6.5 - math.cos(i/1000*2*math.pi) * 0.5))
+    world.radius = int(math.exp(6.5 - math.cos(time.time()/50*2*math.pi) * 0.5))
     world.render(arr)
     #pygame.draw.rect(screen, (255,255,255), [10,20,30,40])
     clock.tick(60)

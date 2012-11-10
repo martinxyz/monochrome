@@ -8,5 +8,7 @@ setup(ext_modules = [
                   depends = glob("*.hpp") + ["setup.py"],
                   swig_opts = ["-c++"],
                   undef_macros = ["NDEBUG"], # make assert() work
+                  #extra_compile_args = ["-O3"],
+                  extra_compile_args = ["-mtune=native"],
                   )
         ])
