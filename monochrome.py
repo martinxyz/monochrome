@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-import sys, time, math
+import sys, time, math, random
 import pygame, numpy
 import monofast
 
@@ -8,7 +8,7 @@ fullscreen = False
 
 pygame.init()
 pygame.display.set_caption("Monochrome")
-pygame.mouse.set_visible(False)
+#pygame.mouse.set_visible(False)
 flags = 0
 #flags |= pygame.DOUBLEBUF | pygame.HWSURFACE
 if fullscreen:
@@ -39,6 +39,9 @@ while True:
         elif event.type == pygame.KEYDOWN:
             if event.key == pygame.K_ESCAPE:
                 quit()
+        elif event.type == pygame.MOUSEMOTION:
+            x, y = pygame.mouse.get_pos()
+            world.dab(x*4 + random.choice((0,1,2,3)), y*4+random.choice((0,1,2,3)), 70)
         #pos = pygame.mouse.get_pos()
     #screen.fill((0,0,0))
     N=64
@@ -52,6 +55,6 @@ while True:
     world.move()
     world.render(arr)
     #pygame.draw.rect(screen, (255,255,255), [10,20,30,40])
-    clock.tick(90)
+    clock.tick(30)
     #print('%.6f' % (time.time() % 1))
     pygame.display.flip()

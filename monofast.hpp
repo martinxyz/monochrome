@@ -54,11 +54,15 @@ class World {
 
   World() {
     bzero(data, sizeof(data));
-    int radius = 700;
+    dab(size/2.0, size/2.0, 700);
+  }
+
+
+  void dab(int cx, int cy, int radius) {
     int radius2 = radius*radius;
     for (int y=0; y<size; y++) {
       for (int x=0; x<size; x++) {
-        int rr = (x-(size/2))*(x-(size/2)) + (y-(size/2))*(y-(size/2));
+        int rr = (x-cx)*(x-cx) + (y-cy)*(y-cy);
         if (rr < radius2) {
           uint16_t * p = data + y/4 * (size/4) + x/4;
           *p |= subpos2mask(x, y);
@@ -66,7 +70,6 @@ class World {
       }
     }
   }
-
 
   void move() {
     for (int y=0; y<size/4; y++) {
