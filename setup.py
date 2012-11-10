@@ -9,6 +9,6 @@ setup(ext_modules = [
                   swig_opts = ["-c++"],
                   undef_macros = ["NDEBUG"], # make assert() work
                   #extra_compile_args = ["-O3"],
-                  extra_compile_args = ["-mtune=native"],
+                  #extra_compile_args = ["-mtune=native"],
                   )
         ])
