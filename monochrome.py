@@ -50,7 +50,7 @@ while True:
         t0 = time.time()
     i += 1
     #arr[:,:] = numpy.random.randint(256**3, size=(screen_w, screen_h))
-    for j in range(4):
+    for j in range(16):
         world.move()
         world.expose()
     world.render(arr)

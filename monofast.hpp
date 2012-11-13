@@ -14,17 +14,14 @@ for i in range(17*8):
     print("%d," % round(linearRGB_component_to_sRGB(lin_c)*255))
 
  */
+/*
 static const uint8_t linear_light_17_steps_to_sRGB[17] = {
-/* white on black, full scale 
-  0, 71, 99, 120, 137, 152, 165, 177, 188, 198, 207, 216, 225, 233, 240, 248, 255,
-*/
 249, 243, 236, 229, 221, 213, 205, 197, 188, 178, 167, 156, 143, 129, 112, 92, 63,
 };
-/*
+*/
 static const uint8_t linear_light_17times8_steps_to_sRGB[17*8] = {
  249, 249, 248, 247, 246, 245, 245, 244, 243, 242, 241, 241, 240, 239, 238, 237, 237, 236, 235, 234, 233, 232, 232, 231, 230, 229, 228, 227, 226, 225, 225, 224, 223, 222, 221, 220, 219, 218, 217, 216, 216, 215, 214, 213, 212, 211, 210, 209, 208, 207, 206, 205, 204, 203, 202, 201, 200, 199, 198, 197, 196, 195, 194, 192, 191, 190, 189, 188, 187, 186, 185, 184, 182, 181, 180, 179, 178, 176, 175, 174, 173, 172, 170, 169, 168, 166, 165, 164, 162, 161, 160, 158, 157, 155, 154, 153, 151, 150, 148, 147, 145, 143, 142, 140, 139, 137, 135, 134, 132, 130, 128, 126, 125, 123, 121, 119, 117, 115, 112, 110, 108, 106, 103, 101, 98, 96, 93, 90, 88, 85, 82, 78, 75, 71, 67, 63, 
 };
-*/
 
 static inline uint8_t subpos2bit(uint8_t x, uint8_t y)
 {
@@ -60,7 +57,7 @@ class World {
 
   uint16_t data[size/4*size/4];
   //uint16_t pos2mask[size/4*size/4];
-  uint8_t film[size/4*size/4];
+  uint16_t film[size/4*size/4];
 
   int particle_x[particle_count];
   int particle_y[particle_count];
@@ -159,7 +156,7 @@ class World {
   {
     for (int y=0; y<size/4; y++) {
       uint16_t * src = data + y*(size/4);
-      uint8_t  * dst = film + y*(size/4);
+      uint16_t * dst = film + y*(size/4);
       for (int x=0; x<size/4; x++) {
         *dst += count_bits(*src);
         dst += 1;
@@ -181,7 +178,7 @@ class World {
     */
     
     for (int y=0; y<size/4; y++) {
-      uint8_t * src = film + y*(size/4);
+      uint16_t * src = film + y*(size/4);
       uint8_t * dst = (uint8_t*)buf.buf + y*buf.strides[1];
       for (int x=0; x<size/4; x++) {
         /*
@@ -197,7 +194,7 @@ class World {
         */
         dst[0] = dst[1] = dst[2] = 
           //  count_bits(*src) * 15;
-          linear_light_17_steps_to_sRGB[((*src)+2)/4];
+          linear_light_17times8_steps_to_sRGB[((*src)+1)/2];
         dst += 4;
         src += 1;
       }
