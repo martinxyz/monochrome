@@ -51,7 +51,9 @@ while True:
     i += 1
     #arr[:,:] = numpy.random.randint(256**3, size=(screen_w, screen_h))
     for j in range(16):
-        world.move()
+        world.move_particles()
+        if j == 16/2:
+            world.move_world()
         world.expose()
     world.render(arr)
     #pygame.draw.rect(screen, (255,255,255), [10,20,30,40])
